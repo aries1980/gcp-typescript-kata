@@ -26,7 +26,7 @@ build() {
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
     node:8.10-slim \
-      ash -x -e -c \
+      bash -x -e -c \
       "npm install && \
       npm run test && \
       npm run build \
