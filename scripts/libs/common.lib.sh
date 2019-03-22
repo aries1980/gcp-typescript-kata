@@ -24,6 +24,27 @@ required_vars() {
   return $rc
 }
 
+##
+# Loads the desired PR package version number.
+#
+# @param string Path to the package.json.
+##
+pr_version_number() {
+  if [ $# -eq 0 ]; then
+    path_to_package_json="."
+  else
+    path_to_package_json=$1
+  fi
+
+  current_version=$(jq -r ".version" ${path_to_package_json}/package.json)
+  if [[ "$current_version" == *"${GIT_BRANCH}-${BUILD_NUMBER}"* ]]; then
+    echo $current_version
+  else
+    echo $current_version-${GIT_BRANCH}-${BUILD_NUMBER}
+  fi
+}
+
+
 container_as_cmd() {
   cmd_args="$@"
   docker run --name ${__CONTAINER_NAME} --rm ${__DOCKER_OPTS} ${__TAGGED_IMG} $cmd_args

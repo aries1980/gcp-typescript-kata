@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+. scripts/travis.lib.sh
 . scripts/common.lib.sh
 
 set -x
 
 setenv() {
   export PACKAGE_NAME=gcp-typescript-kata-birthday
+  required_vars "1 GCP_PROJECT_ID GCP_PROJECT_NUMBER"
 }
 
 build() {
@@ -20,6 +22,7 @@ build() {
   # TODO: Create a shell function for NPM as it happened for Terraform.
   docker run \
     --rm \
+    --env PROJECT_VERSION \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
     node:8.10-alpine \
@@ -34,7 +37,11 @@ build() {
   # TODO: Create a shell function for GSutil as it happened for Terraform.
   docker run \
     --rm \
-    -e PACKAGE_VERSION \
+    -v ${HOST_WORKSPACE}/gcp-travis-bot-service-account-auth.json:/root/service-bot.json \
+    --env PACKAGE_VERSION \
+    --env GCP_REGION \
+    --env GCP_PROJECT_ID \
+    --env GCP_PROJECT_NUMBER \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
     google/cloud-sdk:alpine \
