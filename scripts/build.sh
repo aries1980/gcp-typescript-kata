@@ -47,7 +47,7 @@ build() {
     -w /code \
     google/cloud-sdk \
       bash -x -e -c \
-      "gcloud auth activate-service-account --key-file /root/${HOME}/gcp-key.json && \
+      "gcloud auth activate-service-account --key-file /root/service-bot.json && \
       gsutil cp gcp-typescript-kata-birthday.zip gs://gcp-typescript-kata-function-storage/$PACKAGE_VERSION \
     "
 }
