@@ -1,3 +1,10 @@
 import app from './app';
+
+/**
+ * Start Express server.
+ */
 const port = parseInt(process.env.PORT, 10) || 3333;
-app.listen(port, console.info(`External Integration endpoint is running on port ${port}.`)); // eslint-disable-line no-console
+
+const server = app.listen(port, () => {
+    console.log('Press CTRL-C to stop\n');
+});

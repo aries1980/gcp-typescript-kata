@@ -1,19 +1,20 @@
-const express = require('express');
-const deepcrawlPing = require('../birthday/deepcrawl').ping;
+import express from 'express';
+import { Request, Response } from 'express';
+const birthdayPing = require('../birthday/gcpBirthdayMiddleware  ').ping;
 
-const router = express.Router();
-const pings = {
-  deepcrawl: deepcrawlPing,
+const router: express.Router = express.Router();
+const pings: any = {
+  deepcrawl: birthdayPing,
 };
 
-router.get('/', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-router.get('/downstream', async (req, res) => {
-  let report = {};
+router.get('/downstream', async (req: Request, res: Response) => {
+  const report: any = {};
 
-  for (let i in pings) {
+  for (const i in pings) {
     try {
       await pings[i]();
       report[i] = 'UP';
@@ -25,7 +26,7 @@ router.get('/downstream', async (req, res) => {
   }
 
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(report, null, 2));
+  res.send(JSON.stringify(report, undefined, 2));
 });
 
 export default router;
