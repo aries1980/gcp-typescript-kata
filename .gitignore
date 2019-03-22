@@ -1,16 +1,23 @@
-# Directories
-# ===========
+# Editors
+# =======
 .*code
 .idea
 *.todo
-.terraform
-node_modules
 *.history
 
-# Files
-# =====
+# Build artefacts
+# ===============
+.terraform
+terraform.tfstate.d
+node_modules
 package-lock.json
-gcp-travis-bot-service-account-auth.json
+dist
 *.log
 *.tgz
 *.DS_Store
+
+# Misc files
+# ==========
+*.DS_Store
+gcp-travis-bot-service-account-auth.json
+#
