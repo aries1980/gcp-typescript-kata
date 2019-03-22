@@ -6,6 +6,7 @@
 set -x
 
 setenv() {
+  travis_setenv
   export PACKAGE_NAME=gcp-typescript-kata-birthday
   required_vars "1 GCP_PROJECT_ID GCP_PROJECT_NUMBER"
 }
