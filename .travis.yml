@@ -17,7 +17,7 @@ env:
 cache:
   directories:
     - /home/travis/.npm/
-    - /home/travis/node_modules/
+    - node_modules
 
 jobs:
   include:

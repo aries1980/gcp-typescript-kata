@@ -37,10 +37,10 @@ pr_version_number() {
   fi
 
   current_version=$(jq -r ".version" ${path_to_package_json}/package.json)
-  if [[ "$current_version" == *"${GIT_BRANCH}-${BUILD_NUMBER}"* ]]; then
+  if [[ "$current_version" == *"PR-${GIT_PR_NUMBER}-${BUILD_NUMBER}"* ]]; then
     echo $current_version
   else
-    echo $current_version-${GIT_BRANCH}-${BUILD_NUMBER}
+    echo "$current_version-PR-${GIT_PR_NUMBER}-${BUILD_NUMBER}"
   fi
 }
 
