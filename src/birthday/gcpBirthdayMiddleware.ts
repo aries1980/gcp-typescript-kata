@@ -7,8 +7,8 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
   const username = req.params.usernameParam ? req.params.usernameParam.replace(/[^a-zA-Z0-9_\/]/g, '') : '';
 
   try {
-    if (!req.body.dateOfBirth) {
-      throw new TypeError('The date of birth is missing.');
+    if (username === '') {
+      throw new TypeError('The username is missing.');
     }
 
     if (datePattern.test(req.body.dateOfBirth) === false) {

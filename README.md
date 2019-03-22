@@ -5,6 +5,8 @@ The task:
 
 # If I had more time (aka TODO)
 
+- Add promoted build job and trigger to Travis after the successful Dev
+deployment.
 - Import `google_project` and `google_project_services` resources into the Terraform state.
 - Add authentication and authorisation (candidate: Passport).
 - Add Babel to use the latest ES syntax.
@@ -12,6 +14,7 @@ The task:
 - Multilingual messages, handling the plurals in the messages properly.
 - Create healthcheck endpoint to see gather metrics and see the downstream.
 services health.
+- Encrypt the data store and the Cloud Function storage.
 
 # We can go crazy…
 

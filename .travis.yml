@@ -8,11 +8,22 @@ before_install:
 
 jobs:
   include:
-  - stage: build
+  - stage: build-infra
+    name: "Build infrastructure Terraformation"
     script:
     - "./scripts/terraform-force-apply.sh account-wide"
-#    - "./scripts/monorepo-build.sh"
-#    if: type = pull_request OR branch = master
+  - stage: build
+    name: "Build"
+    script:
+    - "./scripts/build.sh"
+  - stage: upload
+    name: "Upload to Google Cloud Storage"
+    script:
+    - "./scripts/upload.sh"
+  - stage: deploy
+    name: "Deploy to Dev"
+    script:
+    - "./scripts/deploy.sh"
 
 env:
   global:
