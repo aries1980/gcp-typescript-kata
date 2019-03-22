@@ -20,7 +20,7 @@ tf_setenv() {
   ENVIRONMENT=$1
   TF_VARS=$2
   HOST_WORKSPACE=${HOST_WORKSPACE:-$(pwd)}
-  GCP_DEFAULT_REGION=${GCP_DEFAULT_REGION:-"europe-west2"}
+  GCP_REGION=${GCP_REGION:-"europe-west2"}
 
   # This breaks the string out into command line args.
   COMMAND_LINE_TF_VARS=$(eval echo $TF_VARS)

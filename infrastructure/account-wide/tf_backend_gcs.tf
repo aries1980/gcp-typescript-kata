@@ -8,14 +8,16 @@ provider "google" {
 terraform {
   backend "gcs" {
     bucket = "gcp-typescript-kata-tf-states"
-    prefix = "prod/tf-states.tfstate"
+    project = "kata-app"
+    prefix = "kata-app"
+    region  = "europe-west2"
   }
 }
 
 resource "google_storage_bucket" "tf-states" {
   name          = "gcp-typescript-kata-tf-states"
   storage_class = "STANDARD"
-  location      = "europe-west2"
+  location      = "${var.gcp_region}"
 
   versioning {
     enabled = true
@@ -42,7 +44,7 @@ resource "google_storage_bucket" "tf-states" {
 resource "google_storage_bucket" "infrastructure_logs" {
   name          = "gcp-typescript-kata-infrastructure-logs"
   storage_class = "STANDARD"
-  location      = "europe-west2"
+  location      = "${var.gcp_region}"
 
   lifecycle_rule {
     action {
