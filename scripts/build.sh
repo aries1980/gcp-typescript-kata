@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-. scripts/travis.lib.sh
-. scripts/common.lib.sh
+. scripts/lib/travis.lib.sh
+. scripts/lib/common.lib.sh
 
 set -x
 
