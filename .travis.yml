@@ -2,6 +2,10 @@ dist: cosmic
 language: bash
 services:
 - docker
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_9112fb2807d4_key -iv $encrypted_9112fb2807d4_iv -in gcp-travis-bot-service-account-auth.json.enc -out gcp-travis-bot-service-account-auth.json -d
+
 jobs:
   include:
   - stage: build
