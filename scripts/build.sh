@@ -24,8 +24,8 @@ build() {
     --env PROJECT_VERSION \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
-    node:8.10-slim \
-      bash -x -e -c " \
+    node:8.10-alpine \
+      " \
         npm install && \
         npm run test && \
         npm run build \
@@ -43,8 +43,8 @@ build() {
     --env GCP_PROJECT_NUMBER \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
-    google/cloud-sdk \
-      bash -x -e -c "\
+    google/cloud-sdk:alpine \
+      " \
         gcloud auth activate-service-account --key-file /root/service-bot.json && \
         gsutil cp gcp-typescript-kata-birthday.zip gs://gcp-typescript-kata-function-storage/$PACKAGE_VERSION \
       "
