@@ -25,7 +25,7 @@ build() {
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
     node:8.10-alpine \
-      "/bin/sh -x -e -c \
+      "/bin/sh -c \
         npm install && \
         npm run test && \
         npm run build \
@@ -44,7 +44,7 @@ build() {
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
     google/cloud-sdk:alpine \
-      "/bin/sh -x -e -c \
+      "/bin/sh -c \
         gcloud auth activate-service-account --key-file /root/service-bot.json && \
         gsutil cp gcp-typescript-kata-birthday.zip gs://gcp-typescript-kata-function-storage/$PACKAGE_VERSION \
       "
