@@ -3,8 +3,6 @@
 . scripts/libs/travis.lib.sh
 . scripts/libs/common.lib.sh
 
-set -x
-
 setenv() {
   travis_setenv
   export PACKAGE_NAME=gcp-typescript-kata-birthday
@@ -26,10 +24,12 @@ build() {
     --env PROJECT_VERSION \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
-    node:8.10-alpine \
-      npm install && \
-      npm run test && \
-      npm run build
+    node:8.10-slim \
+      bash -x -e -c " \
+        npm install && \
+        npm run test && \
+        npm run build \
+      "
 
   zip -rj ./gcp-typescript-kata-birthday.zip ./dist/*
 
@@ -43,10 +43,11 @@ build() {
     --env GCP_PROJECT_NUMBER \
     -v "${HOST_WORKSPACE}:/code" \
     -w /code \
-    google/cloud-sdk:alpine \
-      gcloud auth activate-service-account --key-file /root/service-bot.json && \
-      gsutil cp gcp-typescript-kata-birthday.zip gs://gcp-typescript-kata-function-storage/$PACKAGE_VERSION
-
+    google/cloud-sdk \
+      bash -x -e -c "\
+        gcloud auth activate-service-account --key-file /root/service-bot.json && \
+        gsutil cp gcp-typescript-kata-birthday.zip gs://gcp-typescript-kata-function-storage/$PACKAGE_VERSION \
+      "
 }
 
 (
