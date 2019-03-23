@@ -7,8 +7,10 @@
     "node": ">=10.*"
   },
   "scripts": {
-    "build": "npm run build-ts && npm run tslint",
+    "build": "npm run clear && npm run build-ts && npm run tslint",
     "build-ts": "tsc",
+    "clear": "rm -rf dist",
+    "test": "npm run unit-test",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "unit-test": "jest --forceExit --coverage --verbose"
   },

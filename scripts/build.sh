@@ -3,6 +3,8 @@
 . scripts/libs/travis.lib.sh
 . scripts/libs/common.lib.sh
 
+set -x
+
 setenv() {
   travis_setenv
   export PACKAGE_NAME=gcp-typescript-kata-birthday
