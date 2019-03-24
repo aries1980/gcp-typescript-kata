@@ -20,16 +20,18 @@ tf_setenv() {
   ENVIRONMENT=$1
   TF_VARS=$2
   HOST_WORKSPACE=${HOST_WORKSPACE:-$(pwd)}
-  GCP_REGION=${GCP_REGION:-"europe-west2"}
+  GCP_REGION=${GCP_REGION:-"europe-west1"}
 
   # This breaks the string out into command line args.
   COMMAND_LINE_TF_VARS=$(eval echo $TF_VARS)
 
-  PACKAGE_VERSION=$(cat ./package.json \
-    | grep version \
-    | head -1 \
-    | awk -F: '{ print $2 }' \
-    | sed 's/[",\t ]//g')
+  if [ "${GIT_BRANCH}" = "${MASTER_BRANCH}" ]; then
+    export PACKAGE_VERSION=$(jq -r ".version" ./package.json)
+    echo ">>> Master build ${PACKAGE_VERSION}"
+  else
+    PACKAGE_VERSION=$(pr_version_number)
+    echo ">>> Non-master build ${PACKAGE_VERSION}"
+  fi
 
   if [ -z $TF_ENV_DIR ]; then
     TF_ENV_DIR=$ENVIRONMENT
@@ -72,6 +74,7 @@ tf_init() {
 }
 
 tf_plan() {
+  required_vars "TF_ENV_DIR"
   tf_init
   tf_select_workspace
   terraform plan \
@@ -92,6 +95,7 @@ tf_force_apply() {
 }
 
 tf_apply() {
+  required_vars "TF_ENV_VAR"
   terraform apply -lock=false -input=false tfplan
 }
 
