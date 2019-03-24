@@ -19,7 +19,6 @@ cache:
   directories:
     - /home/travis/.npm/
     - node_modules
-    - gcp-typescript-kata-birthday.zip
 
 jobs:
   include:
