@@ -34,5 +34,5 @@ jobs:
   - stage: deploy
     name: "Deploy to Dev"
     script:
-    - "./scripts/terraform-plan.sh dev"
-    - "./scripts/terraform-apply.sh dev"
+    - "TF_ENV_DIR=generic-env ./scripts/terraform-plan.sh dev"
+    - "TF_ENV_DIR=generic-env ./scripts/terraform-apply.sh dev"
