@@ -10,7 +10,7 @@ resource "google_cloudfunctions_function" "gcp-typescript-kata-birthday" {
   available_memory_mb   = 128
   runtime               = "nodejs8"
   source_archive_bucket = "${var.gcs_bucket_function_store}"
-  source_archive_object = "${var.package_version}/gcp-typescript-kata-birthday.zip"
+  source_archive_object = "${var.package_version}-gcp-typescript-kata-birthday.zip"
   trigger_http          = true
   timeout               = 15
   entry_point           = "handler"
