@@ -95,7 +95,7 @@ tf_force_apply() {
 }
 
 tf_apply() {
-  required_vars "TF_ENV_VAR"
+  required_vars "TF_ENV_DIR"
   terraform apply -lock=false -input=false tfplan
 }
 
