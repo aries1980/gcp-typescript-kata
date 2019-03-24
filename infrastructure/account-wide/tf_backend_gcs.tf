@@ -10,14 +10,14 @@ terraform {
     bucket = "gcp-typescript-kata-tf-states"
     project = "kata-app"
     prefix = "kata-app"
-    region  = "europe-west1"
+    region  = "europe-west2"
   }
 }
 
 resource "google_storage_bucket" "tf-states" {
   name          = "gcp-typescript-kata-tf-states"
   storage_class = "STANDARD"
-  location      = "${var.gcp_region}"
+  location      = "europe-west2"
 
   versioning {
     enabled = true
