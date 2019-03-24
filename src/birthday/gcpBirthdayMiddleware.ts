@@ -2,23 +2,33 @@ import { Moment } from 'moment';
 import moment = require('moment');
 import { Request, Response, NextFunction } from 'express';
 
-export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
+export const extractDateOfBirth = (date: string): Moment => {
   const datePattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
-  const username = req.params.usernameParam ? req.params.usernameParam.replace(/[^a-zA-Z0-9_\/]/g, '') : '';
+  if (datePattern.test(date) === false) {
+    throw new TypeError('Invalid date of birth');
+  }
 
-  try {
-    if (username === '') {
+  const dateOfBirth: Moment = moment(date);
+  if (dateOfBirth.isValid() === false) {
+    throw new TypeError('Invalid date of birth');
+  }
+
+  return dateOfBirth;
+};
+
+export const extractUsername = (usernameParam: string) => {
+  const username = usernameParam ? usernameParam.replace(/[^a-zA-Z0-9_\/]/g, '') : '';
+  if (username === '') {
       throw new TypeError('The username is missing.');
-    }
+  }
 
-    if (datePattern.test(req.body.dateOfBirth) === false) {
-      throw new TypeError('Invalid date of birth');
-    }
+  return username;
+};
 
-    const dateOfBirth: Moment = moment(req.body.dateOfBirth);
-    if (dateOfBirth.isValid() === false) {
-      throw new TypeError('Invalid date of birth');
-    }
+export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const username = extractUsername(req.params.usernameParam);
+    const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth);
 
     res.status(204);
     console.info({ message: 'The birthday has been saved.', username, dateOfBirth });

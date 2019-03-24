@@ -8,11 +8,17 @@
   },
   "scripts": {
     "build": "npm run clear && npm run build-ts && npm run tslint",
-    "build-ts": "tsc",
-    "clear": "rm -rf dist",
+    "build-ts": "./node_modules/.bin/tsc",
+    "clear": "rm -rf dist && rm -rf coverage",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "pretest": "npm run lint",
+    "prettier": "./node_modules/.bin/prettier",
     "test": "npm run unit-test",
+    "test:coverage": "./node_modules/.bin/jest ./src --silent --coverage",
+    "test:ci:coverage": "./node_modules/.bin/jest ./src --silent --coverage --runInBand",
+    "test:watch": "./node_modules/.bin/jest ./src --watch",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "unit-test": "jest --forceExit --coverage --verbose"
+    "unit-test": "./node_modules/.bin/jest --forceExit --coverage --verbose"
   },
   "repository": {
     "type": "git",
@@ -24,7 +30,12 @@
   "bugs": {
     "url": "https://github.com/aries1980/gcp-typescript-kata"
   },
-  "homepage": "https://www.muvin.in",
+  "lint-staged": {
+    "gitDir": "../",
+    "*.ts": [
+      "npm run prettier"
+    ]
+  },
   "dependencies": {
     "@google-cloud/storage": "^2.4.3",
     "express": "4.16.4",
@@ -34,10 +45,8 @@
     "@types/express": "4.11.1",
     "@types/jest": "23.3.10",
     "@types/node": "11.11.1",
-    "eslint": "4.19.1",
-    "eslint-config-airbnb-base": "13.0.0",
-    "eslint-plugin-import": "2.13.0",
-    "jest": "22.4.0",
+    "jest": "24.5.0",
+    "ts-jest": "^24.0.0",
     "tslint": "5.9.1",
     "typescript": "3.3.4000"
   }
