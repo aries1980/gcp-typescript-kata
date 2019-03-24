@@ -5,8 +5,6 @@
 # Transform Travis-specific environment variables to generic ones.
 ##
 
-set -x
-
 travis_setenv() {
   export BUILD_NUMBER=${TRAVIS_BUILD_NUMBER:-"1"}
   export GIT_COMMIT=${TRAVIS_COMMIT:-""}

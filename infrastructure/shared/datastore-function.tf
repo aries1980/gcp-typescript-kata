@@ -8,6 +8,7 @@ resource "google_cloudfunctions_function" "gcp-typescript-kata-birthday" {
   name                  = "gcp-typescript-kata-birthday"
   description           = "Stores and retreives user birthdays."
   available_memory_mb   = 128
+  runtime               = "nodejs8"
   source_archive_bucket = "${var.gcs_bucket_function_store}"
   source_archive_object = "${var.package_version}/gcp-typescript-kata-birthday.zip"
   trigger_http          = true

@@ -3,6 +3,8 @@
 
 . scripts/libs/common.lib.sh
 
+set -x
+
 terraform() {
   export __CONTAINER_NAME="${__CONTAINER_NAME:-terraform_$(date +'%Y%m%d%H%M%S')_$(unique_id)}"
   export __TAGGED_IMG="hashicorp/terraform:light"
