@@ -5,6 +5,7 @@
 . scripts/libs/terraform.lib.sh
 
 (
+  travis_setenv
   tf_setenv "$@"
   tf_docker_image_update
   tf_info "APPLY"
