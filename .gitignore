@@ -17,6 +17,7 @@ coverage
 *.log
 *.tgz
 *.DS_Store
+tfplan
 
 # Misc files
 # ==========
