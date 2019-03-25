@@ -44,13 +44,13 @@ describe('GCP Birthday Express MiddleWare', () => {
     const username = 'Foo';
 
     const birthdayResponse1 = getResponse(username, moment());
-    const tomorrowResponse1 = getResponse('Foo', moment().add(1, 'days'));
-    const yesterdayResponse1 = getResponse('Foo', moment().subtract(1, 'days'));
+    const tomorrowResponse1 = getResponse('Foo', moment().add(2, 'days').add(1, 'hours'));
+    const yesterdayResponse1 = getResponse('Foo', moment().subtract(1, 'days').subtract(1, 'hours'));
 
     expect(birthdayResponse1).toEqual(`Hello ${username}! Happy birthday!`);
-    expect(tomorrowResponse1).toEqual(`Hello ${username}! Your birthday is in 1 day(s).`);
+    expect(tomorrowResponse1).toEqual(`Hello ${username}! Your birthday is in 2 day(s).`);
     // @TODO: This test will fail in leap years
-    expect(yesterdayResponse1).toEqual(`Hello ${username}! Your birthday is in 365 day(s).`);
+    expect(yesterdayResponse1).toEqual(`Hello ${username}! Your birthday is in 364 day(s).`);
   });
 
 });
