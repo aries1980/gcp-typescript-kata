@@ -35,7 +35,7 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
     const object = myBucket.file(username);
 
     object.save(dateOfBirth, (err: any) => {
-      if (err) {
+      if (!err) {
         throw new EvalError(JSON.stringify({ message: 'Unsuccessful save. Google is down?', err }));
       }
     });
