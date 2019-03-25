@@ -8,9 +8,8 @@ const saveBirthday = saveBirthdayMiddleware(storage);
 const loadBirthday = loadBirthdayMiddleware(storage);
 
 const router = express.Router();
-router.route('/:usernameParam')
-  .put(saveBirthday)
-  .get(loadBirthday);
+router.route('/:usernameParam').get(loadBirthday);
+router.route('/:usernameParam').put(saveBirthday);
 
 // export const ping = () => {
 //   return restPing(`${slackApiEndpoint}`, proxyReqOptDecorator(), 'Birthday API');

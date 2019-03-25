@@ -35,7 +35,6 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
     const object = myBucket.file(username);
 
     object.save(dateOfBirth, (err: any) => {
-      console.log(err);
       if (err) {
         throw new EvalError(JSON.stringify({ message: 'Unsuccessful save. Google is down?', err }));
       }
@@ -53,30 +52,30 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
 };
 
 export const loadBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
-  const username = req.params.usernameParam;
 
   try {
     const birthdayStorage = process.env.GCS_BUCKET_BIRTHDAY;
-    const myBucket = storage.bucket(birthdayStorage);
-    const object = myBucket.file(username);
+    const username = extractUsername(req.params.usernameParam);
 
-    object.download((err: any, content: string) => {
-      if (err) {
-        throw new EvalError(JSON.stringify({ message: 'Username not found.', err }));
-      }
+    const content = await storage
+      .bucket(birthdayStorage)
+      .file(username)
+      .download();
 
-      const dateOfBirth = extractDateOfBirth(content);
-      const username = extractUsername(req.params.usernameParam);
-      const message = getResponse(username, dateOfBirth);
-      res.status(200);
-      res.json({ message });
-      console.info({message: 'The birthday has been loaded.', req});
-    });
+    const dateOfBirth = extractDateOfBirth(content.toString());
+    const message = getResponse(username, dateOfBirth);
+
+    res.status(200);
+    res.json({ message });
+    console.info({message: 'The birthday has been loaded.'});
+
   } catch (err) {
     res.status(504);
     res.json({message: err.message});
-    console.error({message: err.message, req});
+    console.error({message: err.message});
   }
+
+  next();
 };
 
 export const getResponse = (username: string, dateOfBirth: Moment) => {
