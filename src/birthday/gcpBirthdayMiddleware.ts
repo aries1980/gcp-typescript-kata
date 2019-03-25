@@ -1,7 +1,6 @@
 import { Moment } from 'moment';
 import moment = require('moment');
 import { Request, Response, NextFunction } from 'express';
-import { FatalError } from 'tslint/lib/error';
 
 export const extractDateOfBirth = (date: string): Moment => {
   const datePattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
@@ -37,7 +36,7 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
 
     object.save(dateOfBirth, (err: any) => {
       if (err) {
-        throw new FatalError('Unsuccessful save. Google is down?');
+        throw new EvalError('Unsuccessful save. Google is down?');
       }
     });
 
@@ -62,7 +61,7 @@ export const loadBirthdayMiddleware = (storage: any) => async (req: Request, res
 
     object.download((err: any, content: string) => {
       if (err) {
-        throw new FatalError('Username not found.');
+        throw new EvalError('Username not found.');
       }
 
       const dateOfBirth = extractDateOfBirth(content);
