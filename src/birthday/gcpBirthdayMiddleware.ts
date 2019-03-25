@@ -28,20 +28,21 @@ export const extractUsername = (usernameParam: string) => {
 export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     const username = extractUsername(req.params.usernameParam);
-    const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth);
+    const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth).format('YYYY-MM-DD');
 
     const birthdayStorage = process.env.GCS_BUCKET_BIRTHDAY;
     const myBucket = storage.bucket(birthdayStorage);
     const object = myBucket.file(username);
 
     object.save(dateOfBirth, (err: any) => {
+      console.log(err);
       if (err) {
         throw new EvalError(JSON.stringify({ message: 'Unsuccessful save. Google is down?', err }));
       }
     });
 
-    res.status(204);
     console.info({ message: 'The birthday has been saved.', username, dateOfBirth });
+    res.status(204).end();
   } catch (err) {
     res.status(504);
     res.json({ message: err.message });
