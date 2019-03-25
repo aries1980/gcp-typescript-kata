@@ -3,6 +3,8 @@ A Typescript practice exercise using Google Cloud Platform (GCP): Google Cloud F
 
 ## The task
 
+…
+
 ## The solution
 
 The solution is simple: Create a _Google Cloud Function_ that is callable
@@ -24,6 +26,31 @@ Google Cloud Storage has lot of advantages for this task, such as:
 1. Cheap (compared to Cloud SQL, Datastore or running a HA Elastic Search cluster).
 1. Based on a unique key (username), it is easy to retrieve.
 1. Lifecycle management for less-used objects; archiving.
+
+### The code
+
+The code can be divided into 3 parts:
+
+#### Typescript
+
+An Express application written in Typescript. The `gcpBirthdayMiddleware` is
+indeed, a middleware. It is easy to replace to other cloud-specific code
+or being extended to with other paths and handlers.
+
+#### Terraform
+
+Responsible to provision the infrastructure: A bucket to store the
+Cloud Function code and its previous versions and the storage for the
+birthday data.
+
+#### Bash
+
+Shell scripts for CI/CD and the build, inside the `scripts` directory. 
+
+### Testing in the cloud
+
+Call the `https://europe-west1-gcp-typescript-function-kata.cloudfunctions.net/gcp-typescript-kata-birthday/hello/[username]`
+endpoint.
 
 ### Testing locally
 

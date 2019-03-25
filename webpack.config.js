@@ -10,7 +10,7 @@ module.exports = {
   externals: [
     nodeExternals({
       // add here libs that need to be bundled with the functions
-      whitelist: ['express'],
+      whitelist: ['express', '@google-cloud/storage'],
       // Read the modules from the package.json file instead of the node_modules folder.
       modulesFromFile: true,
     }),
