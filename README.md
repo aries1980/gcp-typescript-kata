@@ -1,4 +1,7 @@
 # GCP Typescript Kata
+
+[![Build Status](https://travis-ci.org/aries1980/gcp-typescript-kata.svg?branch=master)](https://travis-ci.org/aries1980/gcp-typescript-kata)
+
 A Typescript practice exercise using Google Cloud Platform (GCP): Google Cloud Functions and Google Cloud Storage.
 
 ## The task
