@@ -1,0 +1,15 @@
+version: "3.1"
+ 
+services:
+  serverless:
+    user: "1000:1000"
+    image: node:8.10-slim
+    command: npm run start
+    #invoke --function gcp-typescript-kata-birthday
+    volumes:
+      - "./:/srv/gcp"
+    working_dir: /srv/gcp
+    env_file:
+      - .env
+    ports:
+      - "${DOCKER_HOST_SERVER_PORT}:3333"
