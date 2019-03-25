@@ -11,7 +11,6 @@ The solution is simple: Create a _Google Cloud Function_ that is callable
 over HTTPS and saves the data into _Google Cloud Storage_. 
 
 ![System Diagram](./docs/asset/system_diagram.svg)
-<img src="./docs/asset/system_diagram.svg">
 
 Google Cloud Functions looked as an ideal solution.
 

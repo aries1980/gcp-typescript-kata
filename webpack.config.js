@@ -6,16 +6,15 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: ['./src/index.ts'],
   target: 'node',
-  externals: [nodeExternals()],
   // exclude external node modules and builtin packages (ie: aws-sdk)
-  // externals: [
-  //   nodeExternals({
-  //     // add here libs that need to be bundled with the functions
-  //     whitelist: ['express', '@google-cloud/storage', 'moment'],
-  //     // Read the modules from the package.json file instead of the node_modules folder.
-  //     modulesFromFile: true,
-  //   }),
-  // ],
+  externals: [
+    nodeExternals({
+      // add here libs that need to be bundled with the functions
+      whitelist: ['express', '@google-cloud/storage', 'moment'],
+      // Read the modules from the package.json file instead of the node_modules folder.
+      modulesFromFile: true,
+    }),
+  ],
   stats: 'minimal',
   module: {
     rules: [
