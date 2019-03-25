@@ -1,6 +1,7 @@
 # GCP Typescript Kata
 
 [![Build Status](https://travis-ci.org/aries1980/gcp-typescript-kata.svg?branch=master)](https://travis-ci.org/aries1980/gcp-typescript-kata)
+[![codecov](https://codecov.io/gh/aries1980/gcp-typescript-kata/branch/master/graph/badge.svg)](https://codecov.io/gh/aries1980/gcp-typescript-kata)
 
 A Typescript practice exercise using Google Cloud Platform (GCP): Google Cloud Functions and Google Cloud Storage.
 
@@ -103,6 +104,7 @@ deployment.
 - Create healthcheck endpoint to see gather metrics and see the downstream.
 services health.
 - Encrypt the data store and the Cloud Function storage.
+- Swagger-based API documentation and testing.
 
 ### We can go crazy…
 

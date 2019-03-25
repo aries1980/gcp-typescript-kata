@@ -28,9 +28,11 @@ jobs:
     name: Build and Publish artifacts
     script:
     - "./scripts/build.sh"
-    - "bash <(curl -s https://codecov.io/bash)"
   - stage: deploy
     name: Deploy to Dev
     script:
     - TF_ENV_DIR=generic-env ./scripts/terraform-plan.sh dev
     - TF_ENV_DIR=generic-env ./scripts/terraform-apply.sh dev
+
+after_success:
+  - "bash <(curl -s https://codecov.io/bash)"
