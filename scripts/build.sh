@@ -31,7 +31,7 @@ build() {
         npm run build \
       "
 
-  zip -r ./gcp-typescript-kata-birthday.zip ./dist/*
+  cd dist && zip -r ../gcp-typescript-kata-birthday.zip .
 
   # TODO: Create a shell function for GSutil as it happened for Terraform.
   docker run \
