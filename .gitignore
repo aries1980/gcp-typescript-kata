@@ -23,4 +23,11 @@ tfplan
 # ==========
 *.DS_Store
 gcp-travis-bot-service-account-auth.json
+gcp-auth.json
 #
+
+# Serverless
+.serverless
+.env
+tmp
+.coveralls.yml
