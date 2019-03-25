@@ -1,7 +1,7 @@
 import * as express from 'express';
 // import { restPing } from '../utils/fetch.js';
 import { Storage } from '@google-cloud/storage';
-import { saveBirthdayMiddleware, loadBirthdayMiddleware } from './gcpBirthdayMiddleware.js';
+import { saveBirthdayMiddleware, loadBirthdayMiddleware } from './gcpBirthdayMiddleware';
 
 const projectId = process.env.GCP_PROJECT_ID;
 const storage = new Storage({ projectId });

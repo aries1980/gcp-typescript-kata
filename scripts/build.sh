@@ -32,7 +32,7 @@ build() {
       "
 
   cp package.json dist
-  cd dist && zip -r ../gcp-typescript-kata-birthday.zip .
+  zip -rj gcp-typescript-kata-birthday.zip .webpack/*
 
   # TODO: Create a shell function for GSutil as it happened for Terraform.
   docker run \
