@@ -36,7 +36,7 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
 
     object.save(dateOfBirth, (err: any) => {
       if (err) {
-        throw new EvalError('Unsuccessful save. Google is down?');
+        throw new EvalError(JSON.stringify({ message: 'Unsuccessful save. Google is down?', err }));
       }
     });
 
@@ -61,7 +61,7 @@ export const loadBirthdayMiddleware = (storage: any) => async (req: Request, res
 
     object.download((err: any, content: string) => {
       if (err) {
-        throw new EvalError('Username not found.');
+        throw new EvalError(JSON.stringify({ message: 'Username not found.', err }));
       }
 
       const dateOfBirth = extractDateOfBirth(content);
