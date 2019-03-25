@@ -21,5 +21,6 @@ resource "google_cloudfunctions_function" "gcp-typescript-kata-birthday" {
   environment_variables = {
     GCP_PROJECT_ID = "${var.gcp_project_id}"
     GCS_BUCKET_BIRTHDAY = "${google_storage_bucket.gcp-typescript-kata-birthday.name}"
+    PACKAGE_VERSION = "${var.package_version}"
   }
 }
