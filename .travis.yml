@@ -28,6 +28,7 @@ jobs:
     name: Build and Publish artifacts
     script:
     - "./scripts/build.sh"
+    - "codecov"
   - stage: deploy
     name: Deploy to Dev
     script:

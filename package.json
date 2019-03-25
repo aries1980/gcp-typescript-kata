@@ -20,7 +20,7 @@
     "test:ci:coverage": "./node_modules/.bin/jest ./src --silent --coverage --runInBand",
     "test:watch": "./node_modules/.bin/jest ./src --watch",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "unit-test": "./node_modules/.bin/jest --forceExit --coverage --verbose && codecov"
+    "unit-test": "./node_modules/.bin/jest --forceExit --coverage --verbose"
   },
   "repository": {
     "type": "git",
