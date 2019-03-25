@@ -3,8 +3,7 @@ import * as express from 'express';
 import { Storage } from '@google-cloud/storage';
 import { saveBirthdayMiddleware, loadBirthdayMiddleware } from './gcpBirthdayMiddleware';
 
-const projectId = process.env.GCP_PROJECT_ID;
-const storage = new Storage({ projectId });
+const storage = new Storage();
 const saveBirthday = saveBirthdayMiddleware(storage);
 const loadBirthday = loadBirthdayMiddleware(storage);
 

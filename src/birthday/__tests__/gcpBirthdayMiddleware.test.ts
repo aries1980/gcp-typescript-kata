@@ -1,5 +1,5 @@
-import { extractDateOfBirth, extractUsername, saveBirthdayMiddleware, loadBirthdayMiddleware } from '../gcpBirthdayMiddleware';
-import { Request, Response, NextFunction } from 'express';
+import { extractDateOfBirth, extractUsername, getResponse } from '../gcpBirthdayMiddleware';
+import moment = require('moment');
 
 describe('GCP Birthday Express MiddleWare', () => {
 
@@ -14,9 +14,10 @@ describe('GCP Birthday Express MiddleWare', () => {
   });
 
   it('should throw error on wrong username', async () => {
-    const sanitizeUsername = () => { const u = extractUsername('&foo'); };
+    const sanitizedUsername = extractUsername('&foo');
     const badUsername = () => { const u = extractUsername('&áé'); };
 
+    expect(sanitizedUsername).toEqual('foo');
     expect(badUsername).toThrow(TypeError);
   });
 
@@ -37,7 +38,19 @@ describe('GCP Birthday Express MiddleWare', () => {
 
     expect(badDate1).toThrow(TypeError);
     expect(badDate2).toThrow(TypeError);
-    // expect(test_2).toEqual({ url: '/nl-nl/test2' });
+  });
+
+  it('should return with the correct birthday greeting', async () => {
+    const username = 'Foo';
+
+    const birthdayResponse1 = getResponse(username, moment());
+    const tomorrowResponse1 = getResponse('Foo', moment().add(1, 'days'));
+    const yesterdayResponse1 = getResponse('Foo', moment().subtract(1, 'days'));
+
+    expect(birthdayResponse1).toEqual(`Hello ${username}! Happy birthday!`);
+    expect(tomorrowResponse1).toEqual(`Hello ${username}! Your birthday is in 1 day(s).`);
+    // @TODO: This test will fail in leap years
+    expect(yesterdayResponse1).toEqual(`Hello ${username}! Your birthday is in 365 day(s).`);
   });
 
 });

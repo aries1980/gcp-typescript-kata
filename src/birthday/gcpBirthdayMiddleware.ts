@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 import moment = require('moment');
 import { Request, Response, NextFunction } from 'express';
+import { FatalError } from 'tslint/lib/error';
 
 export const extractDateOfBirth = (date: string): Moment => {
   const datePattern = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
@@ -30,6 +31,16 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
     const username = extractUsername(req.params.usernameParam);
     const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth);
 
+    const birthdayStorage = process.env.GCS_BUCKET_BIRTHDAY;
+    const myBucket = storage.bucket(birthdayStorage);
+    const object = myBucket.file(username);
+
+    object.save(dateOfBirth, (err: any) => {
+      if (err) {
+        throw new FatalError('Unsuccessful save. Google is down?');
+      }
+    });
+
     res.status(204);
     console.info({ message: 'The birthday has been saved.', username, dateOfBirth });
   } catch (err) {
@@ -43,16 +54,45 @@ export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res
 
 export const loadBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
   const username = req.params.usernameParam;
-  // @TODO: calculate the birthday.
-  const dayUntilBirthday = 1;
 
   try {
-    res.status(200);
-    res.json({message: `Hello ${username}! Your birthday is in ${dayUntilBirthday} day(s).`});
-    console.info({message: 'The birthday has been loaded.', req});
+    const birthdayStorage = process.env.GCS_BUCKET_BIRTHDAY;
+    const myBucket = storage.bucket(birthdayStorage);
+    const object = myBucket.file(username);
+
+    object.download((err: any, content: string) => {
+      if (err) {
+        throw new FatalError('Username not found.');
+      }
+
+      const dateOfBirth = extractDateOfBirth(content);
+      const username = extractUsername(req.params.usernameParam);
+      const message = getResponse(username, dateOfBirth);
+      res.status(200);
+      res.json({ message });
+      console.info({message: 'The birthday has been loaded.', req});
+    });
   } catch (err) {
     res.status(504);
     res.json({message: err.message});
     console.error({message: err.message, req});
   }
+};
+
+export const getResponse = (username: string, dateOfBirth: Moment) => {
+  const today = moment();
+
+  dateOfBirth.year(today.year());
+  let dateDiff = dateOfBirth.diff(today, 'days');
+
+  if (dateDiff === 0) {
+    return `Hello ${username}! Happy birthday!`;
+  }
+
+  if (dateDiff < 0) {
+    dateOfBirth.add(1, 'years');
+    dateDiff = dateOfBirth.diff(today, 'days');
+  }
+
+  return `Hello ${username}! Your birthday is in ${dateDiff} day(s).`;
 };
