@@ -7,9 +7,9 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket = "gcp-typescript-kata-tf-states"
+    bucket  = "gcp-typescript-kata-tf-states"
     project = "kata-app"
-    prefix = "kata-app"
+    prefix  = "kata-app"
     region  = "europe-west2"
   }
 }

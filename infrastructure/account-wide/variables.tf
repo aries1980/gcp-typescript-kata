@@ -10,5 +10,5 @@ variable "gcp_region" {
 
 variable "gcs_bucket_function_store" {
   description = "The GCS bucket name that contains the Google Cloud function code."
-  default = "gcp-typescript-kata-function-storage"
+  default     = "gcp-typescript-kata-function-storage"
 }

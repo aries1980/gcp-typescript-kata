@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "gcp-typescript-kata-birthday" {
-  name = "gcp-typescript-kata-birthday-store"
+  name          = "gcp-typescript-kata-birthday-store"
   storage_class = "STANDARD"
   location      = "${var.gcp_region}"
 }
@@ -14,13 +14,15 @@ resource "google_cloudfunctions_function" "gcp-typescript-kata-birthday" {
   trigger_http          = true
   timeout               = 15
   entry_point           = "handler"
+
   labels = {
     my-label = "my-label-value"
   }
 
   environment_variables = {
-    GCP_PROJECT_ID = "${var.gcp_project_id}"
+    GCP_PROJECT_ID      = "${var.gcp_project_id}"
     GCS_BUCKET_BIRTHDAY = "${google_storage_bucket.gcp-typescript-kata-birthday.name}"
+
     // Setting a version triggers a deployment.
     PACKAGE_VERSION = "${var.package_version}"
   }
