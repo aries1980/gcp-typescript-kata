@@ -28,7 +28,7 @@ export const extractUsername = (usernameParam: string) => {
 export const saveBirthdayMiddleware = (storage: any) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     const username = extractUsername(req.params.usernameParam);
-    const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth);
+    const dateOfBirth = extractDateOfBirth(req.body.dateOfBirth).format('YYYY-MM-DD');
 
     const birthdayStorage = process.env.GCS_BUCKET_BIRTHDAY;
     const myBucket = storage.bucket(birthdayStorage);
