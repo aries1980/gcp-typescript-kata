@@ -2,6 +2,7 @@ version: "3.1"
  
 services:
   serverless:
+    user: "1000:1000"
     image: node:8.10-slim
     command: npm run start
     #invoke --function gcp-typescript-kata-birthday
